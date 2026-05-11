@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Population Census Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Interactive Demographic Dashboard</p>
+        <h1>Population Census Explorer</h1>
+        <p class="hero-text">
+          Explore how regions change across census years through linked population, literacy,
+          migration, and age-distribution views.
+        </p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-panel">
+          <span>Visible population</span>
+          <strong id="visiblePopulation">0</strong>
+        </div>
+        <div class="stat-panel">
+          <span>Avg. literacy</span>
+          <strong id="visibleLiteracy">0%</strong>
+        </div>
+        <div class="stat-panel">
+          <span>Urban share</span>
+          <strong id="visibleUrbanShare">0%</strong>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <section class="controls card">
+        <div class="control-group">
+          <label for="yearSelect">Census year</label>
+          <select id="yearSelect"></select>
+        </div>
+        <div class="control-group">
+          <label for="regionSelect">Region focus</label>
+          <select id="regionSelect"></select>
+        </div>
+        <div class="control-group">
+          <label for="metricSelect">Comparison metric</label>
+          <select id="metricSelect">
+            <option value="population">Population</option>
+            <option value="literacy">Literacy rate</option>
+            <option value="density">Density</option>
+            <option value="migration">Net migration</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="sortSelect">Sort regions by</label>
+          <select id="sortSelect">
+            <option value="population">Population</option>
+            <option value="growth">Growth since last census</option>
+            <option value="literacy">Literacy rate</option>
+            <option value="urbanization">Urbanization</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="kpi-grid">
+        <article class="kpi card accent-sand">
+          <span class="kpi-label">Population</span>
+          <strong class="kpi-value" id="populationValue"></strong>
+          <span class="kpi-foot" id="populationFoot"></span>
+        </article>
+        <article class="kpi card accent-sky">
+          <span class="kpi-label">Growth</span>
+          <strong class="kpi-value" id="growthValue"></strong>
+          <span class="kpi-foot" id="growthFoot"></span>
+        </article>
+        <article class="kpi card accent-rose">
+          <span class="kpi-label">Literacy</span>
+          <strong class="kpi-value" id="literacyValue"></strong>
+          <span class="kpi-foot" id="literacyFoot"></span>
+        </article>
+        <article class="kpi card accent-mint">
+          <span class="kpi-label">Urbanization</span>
+          <strong class="kpi-value" id="urbanValue"></strong>
+          <span class="kpi-foot" id="urbanFoot"></span>
+        </article>
+      </section>
+
+      <section class="viz-grid">
+        <article class="card chart-card">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Population Trend</p>
+              <h2>How the selected region changes over time</h2>
+            </div>
+            <p id="trendCaption" class="caption"></p>
+          </div>
+          <svg id="trendChart" viewBox="0 0 720 240" aria-label="Population trend chart"></svg>
+        </article>
+
+        <article class="card chart-card">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Age Structure</p>
+              <h2>Distribution by age band</h2>
+            </div>
+            <p id="ageCaption" class="caption"></p>
+          </div>
+          <svg id="ageChart" viewBox="0 0 720 240" aria-label="Age distribution chart"></svg>
+        </article>
+
+        <article class="card chart-card wide">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Regional Comparison</p>
+              <h2>Compare regions in the selected census year</h2>
+            </div>
+            <p id="comparisonCaption" class="caption"></p>
+          </div>
+          <svg id="comparisonChart" viewBox="0 0 920 280" aria-label="Regional comparison chart"></svg>
+        </article>
+
+        <article class="card chart-card">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Living Pattern</p>
+              <h2>Urban and rural balance</h2>
+            </div>
+            <p id="settlementCaption" class="caption"></p>
+          </div>
+          <svg id="settlementChart" viewBox="0 0 720 220" aria-label="Urban rural chart"></svg>
+        </article>
+
+        <article class="card chart-card">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Literacy and Density</p>
+              <h2>Relationship across regions</h2>
+            </div>
+            <p id="scatterCaption" class="caption"></p>
+          </div>
+          <svg id="scatterChart" viewBox="0 0 720 240" aria-label="Scatter chart"></svg>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <template id="tooltipTemplate">
+    <div class="tooltip"></div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
